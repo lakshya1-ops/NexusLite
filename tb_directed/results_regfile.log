@@ -1,0 +1,11 @@
+VCD info: dumpfile nexuslite_regfile.vcd opened for output.
+[PASS] test_rw_register(CTRL): aaaa5555 round-tripped correctly
+[PASS] test_rw_register(CONFIG): 12345678 round-tripped correctly
+[PASS] test_status_changes: status went 19 -> 28
+[PASS] test_data_in_out: DATA_IN reads 0, DATA_OUT = DATA_IN+1 correctly
+[FAIL] test_slverr: read RRESP=2 RDATA=56, expected SLVERR/0
+[PASS] test_int_flag_w1c Part A: clear-on-zero is a no-op, as expected
+[PASS] test_int_flag_w1c Part B: bit0 set after counter wrap
+[PASS] test_int_flag_w1c Part B: bit0 cleared correctly via write-1
+=== Testbench complete: 7 PASS, 1 FAIL ===
+tb_directed/tb_nexuslite_regfile.sv:265: $finish called at 905000 (1ps)

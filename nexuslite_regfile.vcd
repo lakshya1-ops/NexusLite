@@ -1,0 +1,906 @@
+$date
+	Wed Jul  1 21:27:47 2026
+$end
+$version
+	Icarus Verilog
+$end
+$timescale
+	1ps
+$end
+$scope module tb_nexuslite_regfile $end
+$var wire 1 ! WREADY $end
+$var wire 1 " RVALID $end
+$var wire 2 # RRESP [1:0] $end
+$var wire 32 $ RDATA [31:0] $end
+$var wire 1 % BVALID $end
+$var wire 2 & BRESP [1:0] $end
+$var wire 1 ' AWREADY $end
+$var wire 1 ( ARREADY $end
+$var parameter 32 ) ADDR_WIDTH $end
+$var parameter 32 * CLK_PERIOD $end
+$var parameter 8 + CONFIG_OFFSET $end
+$var parameter 8 , CTRL_OFFSET $end
+$var parameter 8 - DATA_IN_OFFSET $end
+$var parameter 8 . DATA_OUT_OFFSET $end
+$var parameter 32 / DATA_WIDTH $end
+$var parameter 8 0 INT_FLAG_OFFSET $end
+$var parameter 8 1 INVALID_OFFSET $end
+$var parameter 8 2 STATUS_OFFSET $end
+$var reg 1 3 ACLK $end
+$var reg 8 4 ARADDR [7:0] $end
+$var reg 1 5 ARESETN $end
+$var reg 1 6 ARVALID $end
+$var reg 8 7 AWADDR [7:0] $end
+$var reg 1 8 AWVALID $end
+$var reg 1 9 BREADY $end
+$var reg 1 : RREADY $end
+$var reg 32 ; WDATA [31:0] $end
+$var reg 1 < WVALID $end
+$var integer 32 = fail_count [31:0] $end
+$var integer 32 > pass_count [31:0] $end
+$scope module dut $end
+$var wire 1 3 ACLK $end
+$var wire 8 ? ARADDR [7:0] $end
+$var wire 1 5 ARESETN $end
+$var wire 1 6 ARVALID $end
+$var wire 8 @ AWADDR [7:0] $end
+$var wire 1 8 AWVALID $end
+$var wire 1 9 BREADY $end
+$var wire 1 : RREADY $end
+$var wire 32 A WDATA [31:0] $end
+$var wire 1 < WVALID $end
+$var parameter 32 B ADDR_WIDTH $end
+$var parameter 8 C CONFIG_OFFSET $end
+$var parameter 8 D CTRL_OFFSET $end
+$var parameter 8 E DATA_IN_OFFSET $end
+$var parameter 8 F DATA_OUT_OFFSET $end
+$var parameter 32 G DATA_WIDTH $end
+$var parameter 8 H INT_FLAG_OFFSET $end
+$var parameter 8 I STATUS_OFFSET $end
+$var reg 1 ( ARREADY $end
+$var reg 1 ' AWREADY $end
+$var reg 2 J BRESP [1:0] $end
+$var reg 1 % BVALID $end
+$var reg 32 K RDATA [31:0] $end
+$var reg 2 L RRESP [1:0] $end
+$var reg 1 " RVALID $end
+$var reg 1 ! WREADY $end
+$var reg 8 M ar_addr_captured [7:0] $end
+$var reg 1 N ar_captured $end
+$var reg 8 O aw_addr_captured [7:0] $end
+$var reg 1 P aw_captured $end
+$var reg 32 Q config_reg [31:0] $end
+$var reg 32 R ctrl_reg [31:0] $end
+$var reg 32 S data_in_reg [31:0] $end
+$var reg 32 T int_flag_reg [31:0] $end
+$var reg 1 U r_captured $end
+$var reg 32 V r_data_captured [31:0] $end
+$var reg 1 W rd_state $end
+$var reg 32 X status_counter [31:0] $end
+$var reg 1 Y w_captured $end
+$var reg 32 Z w_data_captured [31:0] $end
+$var reg 1 [ wr_state $end
+$upscope $end
+$scope task do_read $end
+$upscope $end
+$scope task do_write $end
+$upscope $end
+$scope task test_data_in_out $end
+$upscope $end
+$scope task test_int_flag_w1c $end
+$upscope $end
+$scope task test_rw_register $end
+$upscope $end
+$scope task test_slverr $end
+$upscope $end
+$scope task test_status_changes $end
+$upscope $end
+$upscope $end
+$enddefinitions $end
+$comment Show the parameter values. $end
+$dumpall
+b1000 I
+b1100 H
+b100000 G
+b10100 F
+b10000 E
+b0 D
+b100 C
+b1000 B
+b1000 2
+b11111111 1
+b1100 0
+b100000 /
+b10100 .
+b10000 -
+b0 ,
+b100 +
+b1010 *
+b1000 )
+$end
+#0
+$dumpvars
+0[
+b0 Z
+0Y
+b0 X
+0W
+b0 V
+0U
+b0 T
+b0 S
+b0 R
+b0 Q
+0P
+b0 O
+0N
+b0 M
+b0 L
+bx K
+b0 J
+b0 A
+b0 @
+b0 ?
+b0 >
+b0 =
+0<
+b0 ;
+0:
+09
+08
+b0 7
+06
+05
+b0 4
+03
+0(
+0'
+b0 &
+0%
+bx $
+b0 #
+0"
+0!
+$end
+#5000
+13
+#10000
+03
+#15000
+13
+#20000
+03
+#25000
+b1 X
+15
+13
+#30000
+03
+#35000
+b10 X
+13
+#40000
+03
+#45000
+b11 X
+19
+1<
+b10101010101010100101010101010101 ;
+b10101010101010100101010101010101 A
+18
+13
+#50000
+03
+#55000
+b100 X
+1%
+1[
+b10101010101010100101010101010101 R
+1!
+0Y
+b10101010101010100101010101010101 Z
+1'
+0P
+0<
+08
+13
+#60000
+03
+#65000
+0[
+0%
+b101 X
+09
+13
+#70000
+03
+#75000
+b110 X
+0!
+0'
+13
+#80000
+03
+#85000
+b111 X
+1:
+16
+13
+#90000
+03
+#95000
+b1000 X
+1W
+1"
+1(
+b10101010101010100101010101010101 $
+b10101010101010100101010101010101 K
+06
+13
+#100000
+03
+#105000
+0W
+0"
+b1001 X
+0:
+13
+#110000
+03
+#115000
+b1010 X
+0(
+b1 >
+13
+#120000
+03
+#125000
+b1011 X
+19
+1<
+b10010001101000101011001111000 ;
+b10010001101000101011001111000 A
+18
+b100 7
+b100 @
+13
+#130000
+03
+#135000
+b1100 X
+1%
+1[
+b10010001101000101011001111000 Q
+1!
+0Y
+b10010001101000101011001111000 Z
+1'
+0P
+b100 O
+0<
+08
+13
+#140000
+03
+#145000
+0[
+0%
+b1101 X
+09
+13
+#150000
+03
+#155000
+b1110 X
+0!
+0'
+13
+#160000
+03
+#165000
+b1111 X
+1:
+16
+b100 4
+b100 ?
+13
+#170000
+03
+#175000
+b10000 X
+1W
+1"
+1(
+b100 M
+b10010001101000101011001111000 $
+b10010001101000101011001111000 K
+06
+13
+#180000
+03
+#185000
+0W
+0"
+b10001 X
+0:
+13
+#190000
+03
+#195000
+b10010 X
+0(
+b10 >
+13
+#200000
+03
+#205000
+b10011 X
+1:
+16
+b1000 4
+b1000 ?
+13
+#210000
+03
+#215000
+b10100 X
+1W
+1"
+1(
+b1000 M
+b10011 $
+b10011 K
+06
+13
+#220000
+03
+#225000
+0W
+0"
+b10101 X
+0:
+13
+#230000
+03
+#235000
+b10110 X
+0(
+13
+#240000
+03
+#245000
+b10111 X
+13
+#250000
+03
+#255000
+b11000 X
+13
+#260000
+03
+#265000
+b11001 X
+13
+#270000
+03
+#275000
+b11010 X
+13
+#280000
+03
+#285000
+b11011 X
+13
+#290000
+03
+#295000
+b11100 X
+1:
+16
+13
+#300000
+03
+#305000
+1W
+1"
+1(
+b11100 $
+b11100 K
+b11101 X
+06
+13
+#310000
+03
+#315000
+b11110 X
+0W
+0"
+0:
+13
+#320000
+03
+#325000
+0(
+b11111 X
+b11 >
+13
+#330000
+03
+#335000
+b100000 X
+19
+1<
+b1010101 ;
+b1010101 A
+18
+b10000 7
+b10000 @
+13
+#340000
+03
+#345000
+1%
+1[
+b1010101 S
+1!
+0Y
+b1010101 Z
+1'
+0P
+b10000 O
+b100001 X
+0<
+08
+13
+#350000
+03
+#355000
+b100010 X
+0[
+0%
+09
+13
+#360000
+03
+#365000
+0!
+0'
+b100011 X
+13
+#370000
+03
+#375000
+b100100 X
+1:
+16
+b10000 4
+b10000 ?
+13
+#380000
+03
+#385000
+1W
+1"
+1(
+b10000 M
+b0 $
+b0 K
+b100101 X
+06
+13
+#390000
+03
+#395000
+b100110 X
+0W
+0"
+0:
+13
+#400000
+03
+#405000
+0(
+b100111 X
+13
+#410000
+03
+#415000
+b101000 X
+1:
+16
+b10100 4
+b10100 ?
+13
+#420000
+03
+#425000
+1W
+1"
+1(
+b10100 M
+b1010110 $
+b1010110 K
+b101001 X
+06
+13
+#430000
+03
+#435000
+b101010 X
+0W
+0"
+0:
+13
+#440000
+03
+#445000
+0(
+b101011 X
+b100 >
+13
+#450000
+03
+#455000
+b101100 X
+19
+1<
+b10101011110011010001001000110100 ;
+b10101011110011010001001000110100 A
+18
+b11111111 7
+b11111111 @
+13
+#460000
+03
+#465000
+1%
+1[
+b10 &
+b10 J
+1!
+0Y
+b10101011110011010001001000110100 Z
+1'
+0P
+b11111111 O
+b101101 X
+0<
+08
+13
+#470000
+03
+#475000
+b101110 X
+0[
+0%
+09
+13
+#480000
+03
+#485000
+0!
+0'
+b101111 X
+13
+#490000
+03
+#495000
+b110000 X
+1:
+16
+b11111111 4
+b11111111 ?
+13
+#500000
+03
+#505000
+1W
+1"
+1(
+b11111111 M
+b10 #
+b10 L
+b110001 X
+06
+13
+#510000
+03
+#515000
+b110010 X
+0W
+0"
+0:
+13
+#520000
+03
+#525000
+0(
+b110011 X
+b1 =
+13
+#530000
+03
+#535000
+b110100 X
+1:
+16
+b1100 4
+b1100 ?
+13
+#540000
+03
+#545000
+1W
+1"
+1(
+b1100 M
+b0 #
+b0 L
+b0 $
+b0 K
+b110101 X
+06
+13
+#550000
+03
+#555000
+b110110 X
+0W
+0"
+0:
+13
+#560000
+03
+#565000
+0(
+b110111 X
+13
+#570000
+03
+#575000
+b111000 X
+19
+1<
+b1 ;
+b1 A
+18
+b1100 7
+b1100 @
+13
+#580000
+03
+#585000
+1%
+1[
+b0 &
+b0 J
+1!
+0Y
+b1 Z
+1'
+0P
+b1100 O
+b111001 X
+0<
+08
+13
+#590000
+03
+#595000
+b111010 X
+0[
+0%
+09
+13
+#600000
+03
+#605000
+0!
+0'
+b111011 X
+13
+#610000
+03
+#615000
+b111100 X
+1:
+16
+13
+#620000
+03
+#625000
+1W
+1"
+1(
+b111101 X
+06
+13
+#630000
+03
+#635000
+b111110 X
+0W
+0"
+0:
+13
+#640000
+03
+#645000
+0(
+b11111111111111111111111111111101 X
+b101 >
+13
+#650000
+03
+#655000
+b11111111111111111111111111111110 X
+13
+#660000
+03
+#665000
+b11111111111111111111111111111111 X
+13
+#670000
+03
+#675000
+b0 X
+b1 T
+13
+#680000
+03
+#685000
+b1 X
+13
+#690000
+03
+#695000
+b10 X
+1:
+16
+13
+#700000
+03
+#705000
+1W
+1"
+1(
+b1 $
+b1 K
+b11 X
+06
+13
+#710000
+03
+#715000
+b100 X
+0W
+0"
+0:
+13
+#720000
+03
+#725000
+0(
+b101 X
+b110 >
+13
+#730000
+03
+#735000
+b110 X
+19
+1<
+18
+13
+#740000
+03
+#745000
+1%
+1[
+b0 T
+1!
+0Y
+1'
+0P
+b111 X
+0<
+08
+13
+#750000
+03
+#755000
+b1000 X
+0[
+0%
+09
+13
+#760000
+03
+#765000
+0!
+0'
+b1001 X
+13
+#770000
+03
+#775000
+b1010 X
+1:
+16
+13
+#780000
+03
+#785000
+1W
+1"
+1(
+b0 $
+b0 K
+b1011 X
+06
+13
+#790000
+03
+#795000
+b1100 X
+0W
+0"
+0:
+13
+#800000
+03
+#805000
+0(
+b1101 X
+b111 >
+13
+#810000
+03
+#815000
+b1110 X
+13
+#820000
+03
+#825000
+b1111 X
+13
+#830000
+03
+#835000
+b10000 X
+13
+#840000
+03
+#845000
+b10001 X
+13
+#850000
+03
+#855000
+b10010 X
+13
+#860000
+03
+#865000
+b10011 X
+13
+#870000
+03
+#875000
+b10100 X
+13
+#880000
+03
+#885000
+b10101 X
+13
+#890000
+03
+#895000
+b10110 X
+13
+#900000
+03
+#905000
+b10111 X
+13
