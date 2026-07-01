@@ -1,4 +1,3 @@
-import nexuslite_pkg::*;
 module nexuslite_min#(
     parameter int ADDR_WIDTH = 4,
     parameter int DATA_WIDTH = 32
@@ -32,7 +31,7 @@ output logic [1:0] RRESP,
 output logic RVALID,
 input  logic RREADY
 );
-
+import nexuslite_pkg::*;
 logic [DATA_WIDTH-1:0] reg_data;
 
 //write fsm
