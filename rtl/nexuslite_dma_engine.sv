@@ -15,9 +15,7 @@ module nexuslite_dma_engine #(
     output logic dma_done,
     output logic dma_error,
 
-    // AXI-Lite MASTER interface (this module drives the outputs
-    // that were inputs in your slave modules, and reads what were
-    // outputs there - the direction of every signal flips)
+    // AXI-Lite MASTER interface
     output logic [ADDR_WIDTH-1:0] m_AWADDR,
     output logic m_AWVALID,
     input  logic m_AWREADY,
@@ -46,6 +44,14 @@ logic [DATA_WIDTH-1:0] current_src_addr;
 logic [DATA_WIDTH-1:0] current_dst_addr;
 logic [DATA_WIDTH-1:0] read_data_captured;
 
+// Independent "have I been acknowledged yet" flags for the write
+// address and write data channels, since AWREADY and WREADY can
+// (and, with this project's own slave modules, DO) arrive on
+// different cycles - same class of problem as the split-cycle
+// AWVALID/WVALID capture logic in the slave FSMs, mirrored here
+// for the master side's AWREADY/WREADY.
+logic aw_done, w_done;
+
 always_ff @(posedge ACLK or negedge ARESETN)
 begin
     if(!ARESETN)
@@ -66,6 +72,8 @@ begin
         current_src_addr<='0;
         current_dst_addr<='0;
         read_data_captured<='0;
+        aw_done<='0;
+        w_done<='0;
         state<=DMA_IDLE;
     end
     else
@@ -104,7 +112,8 @@ begin
         DMA_READ_DATA:
         begin
             m_RREADY <= 1'b1;
-            if(m_RVALID)
+            if(m_RVALID && m_RREADY)
+
             begin
                 read_data_captured <= m_RDATA;
                 m_RREADY <= 1'b0;
@@ -117,6 +126,8 @@ begin
                 else
                 begin
                     state<=DMA_WRITE_ADDR_DATA;
+                    aw_done <= 1'b0;
+                    w_done  <= 1'b0;
                 end
             end
         end
@@ -124,22 +135,37 @@ begin
         DMA_WRITE_ADDR_DATA:
         begin
             m_AWADDR <= current_dst_addr;
-            m_AWVALID <= 1'b1;
-            m_WDATA <= read_data_captured;
-            m_WVALID <= 1'b1;
+            m_WDATA  <= read_data_captured;
 
-            if(m_AWREADY && m_WREADY)
+            // Only keep asserting VALID on whichever channel hasn't
+            // been acknowledged yet - this is what lets AWREADY and
+            // WREADY arrive on different cycles without either being
+            // dropped or re-triggered incorrectly.
+            m_AWVALID <= !aw_done;
+            m_WVALID  <= !w_done;
+
+            if (m_AWREADY && !aw_done)
+                aw_done <= 1'b1;
+
+            if (m_WREADY && !w_done)
+                w_done <= 1'b1;
+
+            // "Both done" check uses the same same-cycle-or-already-latched
+            // pattern as the slave FSMs' "both ready" check.
+            if ((m_AWREADY || aw_done) && (m_WREADY || w_done))
             begin
                  m_AWVALID <= 1'b0;
-                 m_WVALID<=1'b0;
-                 state<=DMA_WRITE_RESP;
+                 m_WVALID  <= 1'b0;
+                 aw_done   <= 1'b0;
+                 w_done    <= 1'b0;
+                 state     <= DMA_WRITE_RESP;
             end
         end
 
         DMA_WRITE_RESP:
         begin
             m_BREADY <= 1'b1;
-            if(m_BVALID)
+            if(m_BVALID && m_BREADY)
              begin
                 m_BREADY <= 1'b0;
                 if(m_BRESP != AXI_RESP_OKAY)

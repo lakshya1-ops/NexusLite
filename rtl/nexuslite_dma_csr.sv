@@ -64,6 +64,7 @@ logic [DATA_WIDTH-1:0] write_data_current;
 // tracks whether a start command has been written but not yet acked by the DMA engine
 // (readable back via DMA_CTRL bit0)
 logic dma_start_pending;
+logic dma_done_latched;
 
 assign dma_src_addr = src_addr_reg;
 assign dma_dst_addr = dst_addr_reg;
@@ -95,6 +96,7 @@ begin
             length_reg   <= '0;
             dma_start <= 1'b0;
             dma_start_pending <= 1'b0;
+            dma_done_latched <= 1'b0;
         end
 
         else
@@ -106,6 +108,10 @@ begin
         // clear the pending flag once the DMA engine acks the start command
         if (dma_start_ack)
             dma_start_pending <= 1'b0;
+            // latch dma_done - it's only a one-cycle pulse from the engine,
+        // software needs to be able to reliably observe it by polling
+        if (dma_done)
+            dma_done_latched <= 1'b1;
 
         case (wr_state)
 
@@ -153,17 +159,16 @@ begin
                         length_reg <= write_data_current; 
                         BRESP<= AXI_RESP_OKAY;
                         end
-                    DMA_CTRL_OFFSET:
+                  DMA_CTRL_OFFSET:
+                    begin
+                        if (write_data_current[0])
                         begin
-                            if (write_data_current[0])
-                            
-                            begin
-                                dma_start         <= 1'b1;
-                                dma_start_pending <= 1'b1;
-                            end
-                            BRESP <= AXI_RESP_OKAY;
+                            dma_start         <= 1'b1;
+                            dma_start_pending <= 1'b1;
+                            dma_done_latched  <= 1'b0;
                         end
-
+                        BRESP <= AXI_RESP_OKAY;
+                    end
                     DMA_STATUS_OFFSET: BRESP <= AXI_RESP_OKAY;
         
                     default: BRESP <= AXI_RESP_SLVERR;
@@ -247,10 +252,10 @@ begin
                         end
 
                     DMA_STATUS_OFFSET:
-                    begin
-                     RDATA<={29'b0, dma_error, dma_done, dma_busy};
-                     RRESP <= AXI_RESP_OKAY;
-                    end
+                        begin
+                        RDATA<={29'b0, dma_error, dma_done_latched, dma_busy};
+                        RRESP <= AXI_RESP_OKAY;
+                        end
                     default:
                     begin
                         RDATA <= '0;

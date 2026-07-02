@@ -123,17 +123,17 @@ logic reg_awready;
  assign ar_handshake = ARVALID & ARREADY;
 
 // Destination Tracking
- always_ff @(posedge ACLK or negedge ARESETN) begin
-        if (!ARESETN)
-            write_sel_q <= 1'b0;
-        else if (aw_handshake)
-            write_sel_q <= write_sel;
-    end
+always_ff @(posedge ACLK or negedge ARESETN) begin
+    if (!ARESETN)
+        write_sel_q <= 1'b0;
+    else if (AWVALID)
+        write_sel_q <= write_sel;
+end
 
     always_ff @(posedge ACLK or negedge ARESETN) begin
         if (!ARESETN)
             read_sel_q <= 1'b0;
-        else if (ar_handshake)
+        else if (ARVALID)
             read_sel_q <= read_sel;
     end
 
@@ -255,8 +255,8 @@ logic reg_awready;
 
    // Route AWADDR
 
- assign reg_awaddr = AWADDR;
- assign csr_awaddr = AWADDR;
+assign reg_awaddr = AWADDR & 8'h1F;
+assign csr_awaddr = AWADDR & 8'h1F;
 
  // Route AWVALID
 
@@ -313,8 +313,8 @@ logic reg_awready;
 
  // Route ARADDR
 
- assign reg_araddr = ARADDR;
- assign csr_araddr = ARADDR;
+assign reg_araddr = ARADDR & 8'h1F;
+assign csr_araddr = ARADDR & 8'h1F;
 
  // Route ARVALID
 
